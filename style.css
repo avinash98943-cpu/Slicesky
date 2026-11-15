@@ -91,7 +91,15 @@ body {
   margin-bottom: 20px;
 }
 
-.popular-label { font-size: 0.85rem; color: #e4eef5; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55); }
+.popular-label {
+  font-size: 0.85rem;
+  color: #e4eef5;
+  text-shadow: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(9, 22, 32, 0.55);
+}
 
 .chip {
   padding: 6px 12px;
