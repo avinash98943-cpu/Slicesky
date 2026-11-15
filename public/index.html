@@ -5,37 +5,39 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Slicesky</title>
 <style>
-  :root { --bg:#0f1b2d; --card:rgba(12,22,40,.62); --text:#eef3fa; --muted:#9fb0c8; --accent:#4cc3ff; --err:#ff8a8a; }
+  :root { --bg:#0f1b2d; --card:rgba(10,18,34,.82); --text:#eef3fa; --muted:#d3deee; --accent:#4cc3ff; --err:#ff8a8a; }
   * { box-sizing: border-box; }
   #sky { position:fixed; inset:0; width:100%; height:100%; z-index:-1; }
   body { margin:0; font-family: system-ui, -apple-system, Segoe UI, sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; }
+  body::before { content:""; position:fixed; inset:0; z-index:-1; pointer-events:none; background:linear-gradient(rgba(5,12,26,.55), rgba(5,12,26,.25) 35%, rgba(5,12,26,.35) 70%, rgba(5,12,26,.65)); }
   main { flex:1; width:100%; max-width:480px; margin:0 auto; padding:20px 16px; }
-  h1 { text-shadow:0 1px 6px rgba(0,0,0,.5); margin:0 0 16px; font-size:1.4rem; letter-spacing:.5px; }
+  h1 { display:inline-block; padding:6px 14px; border-radius:10px; background:rgba(10,18,34,.78); text-shadow:0 1px 3px rgba(0,0,0,.6); margin:0 0 16px; font-size:1.4rem; letter-spacing:.5px; }
   h1 span { color:var(--accent); }
   form { display:flex; gap:8px; }
-  input { flex:1; min-width:0; padding:12px 14px; font-size:1rem; border-radius:10px; border:1px solid #2c4166; background:var(--card); color:var(--text); }
+  input::placeholder { color:#b9c7dc; }
+  input { flex:1; min-width:0; padding:12px 14px; font-size:1rem; border-radius:10px; border:1px solid #2c4166; background:rgba(10,18,34,.82); color:var(--text); }
   button { cursor:pointer; font-size:1rem; }
   form button { padding:12px 18px; border:0; border-radius:10px; background:var(--accent); color:#06223a; font-weight:600; }
   .chips { display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 18px; }
-  .chips button { padding:7px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.25); background:rgba(12,22,40,.55); color:var(--text); font-size:.9rem; }
+  .chips button { padding:7px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.25); background:rgba(10,18,34,.78); color:#fff; font-size:.9rem; }
   .chips button:hover { color:var(--text); border-color:var(--accent); }
   .card { background:var(--card); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:16px; padding:22px; }
-  .loc { color:var(--muted); margin:0 0 4px; }
+  .loc { text-shadow:0 1px 3px rgba(0,0,0,.6); color:var(--muted); margin:0 0 4px; }
   .temp { font-size:3.4rem; font-weight:700; margin:0; }
   .cond { display:flex; align-items:center; gap:8px; margin:4px 0 18px; color:var(--muted); }
   .cond img { width:48px; height:48px; }
   .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
-  .grid div { background:rgba(8,16,30,.45); border-radius:12px; padding:12px; }
+  .grid div { background:rgba(255,255,255,.08); border-radius:12px; padding:12px; }
   .grid small { display:block; color:var(--muted); margin-bottom:2px; }
   .grid b { font-size:1.15rem; }
-  .msg { text-align:center; color:var(--muted); padding:30px 10px; }
-  .msg.err { color:var(--err); }
+  .msg { text-align:center; color:#fff; text-shadow:0 1px 4px rgba(0,0,0,.7); background:rgba(10,18,34,.7); border-radius:12px; padding:30px 10px; }
+  .msg.err { color:#ffb3b3; }
   .msg button { margin-top:12px; padding:8px 16px; border-radius:8px; border:1px solid var(--accent); background:transparent; color:var(--accent); }
   .dev { margin-top:16px; }
-  .dev summary { cursor:pointer; color:var(--muted); font-size:.9rem; }
-  pre { background:#0a1424; padding:12px; border-radius:10px; overflow:auto; font-size:.78rem; max-height:260px; }
+  .dev summary { cursor:pointer; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,.7); font-size:.9rem; }
+  pre { color:#e6eefb; background:#0a1424; padding:12px; border-radius:10px; overflow:auto; font-size:.78rem; max-height:260px; }
   .dev button { padding:6px 12px; border-radius:8px; border:1px solid #2c4166; background:transparent; color:var(--muted); }
-  footer { text-shadow:0 1px 4px rgba(0,0,0,.6); text-align:center; padding:16px; color:var(--muted); font-size:.8rem; }
+  footer { color:#e6eefb; text-shadow:0 1px 4px rgba(0,0,0,.8); text-align:center; padding:16px; color:var(--muted); font-size:.8rem; }
   footer a { color:var(--accent); }
 </style>
 </head>
