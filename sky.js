@@ -155,16 +155,16 @@ window.SliceskySky = (function () {
     ctx.fillRect(0, 0, W, H);
 
     // Dark scrim at top and bottom so bare text (header, footer) stays readable over bright skies
-    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.28);
-    scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.42)");
+    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.32);
+    scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.6)");
     scrimTop.addColorStop(1, "rgba(2, 8, 18, 0)");
     ctx.fillStyle = scrimTop;
-    ctx.fillRect(0, 0, W, H * 0.28);
-    const scrimBottom = ctx.createLinearGradient(0, H * 0.74, 0, H);
+    ctx.fillRect(0, 0, W, H * 0.32);
+    const scrimBottom = ctx.createLinearGradient(0, H * 0.72, 0, H);
     scrimBottom.addColorStop(0, "rgba(2, 8, 18, 0)");
-    scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.4)");
+    scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.5)");
     ctx.fillStyle = scrimBottom;
-    ctx.fillRect(0, H * 0.74, W, H * 0.26);
+    ctx.fillRect(0, H * 0.72, W, H * 0.28);
 
     // Sun or moon
     if (mode === "clear" || mode === "partly") {
