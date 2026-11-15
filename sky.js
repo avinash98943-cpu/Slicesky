@@ -72,7 +72,7 @@ window.SliceskySky = (function () {
     for (let i = 0; i < 10; i++) {
       clouds.push({
         x: rand(-0.1, 1.1) * W,
-        y: rand(0.02, 0.42) * H,
+        y: rand(0.24, 0.55) * H, // below the header text zone
         s: rand(0.6, 1.5),
         v: rand(6, 18), // px/s
       });
