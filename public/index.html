@@ -22,6 +22,10 @@
   .chips button { padding:7px 12px; border-radius:999px; border:1px solid rgba(255,255,255,.25); background:rgba(10,18,34,.78); color:#fff; font-size:.9rem; }
   .chips button:hover { color:var(--text); border-color:var(--accent); }
   .card { background:var(--card); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:16px; padding:22px; }
+  .banner { position:relative; margin:-22px -22px 16px; padding:14px 16px 0; height:120px; border-radius:16px 16px 0 0; background:linear-gradient(rgba(255,255,255,.14), rgba(255,255,255,.03)); color:#fff; overflow:hidden; }
+  .banner svg { width:100%; height:100%; display:block; filter:drop-shadow(0 2px 4px rgba(0,0,0,.45)); }
+  .banner span { position:absolute; top:10px; left:14px; font-size:.78rem; background:rgba(10,18,34,.75); padding:3px 9px; border-radius:999px; }
+  .chips button.active { background:var(--accent); color:#06223a; border-color:var(--accent); font-weight:600; }
   .loc { text-shadow:0 1px 3px rgba(0,0,0,.6); color:var(--muted); margin:0 0 4px; }
   .temp { font-size:3.4rem; font-weight:700; margin:0; }
   .cond { display:flex; align-items:center; gap:8px; margin:4px 0 18px; color:var(--muted); }
@@ -58,6 +62,7 @@
 </main>
 <footer>Weather data by <a href="https://www.weatherapi.com/" target="_blank" rel="noopener">WeatherAPI.com</a></footer>
 <script src="/sky.js"></script>
+<script src="/cities.js"></script>
 <script>
 const $ = (id) => document.getElementById(id);
 // label shown to user -> unambiguous query sent to the API (avoids e.g. Delhi, Canada)
@@ -66,7 +71,7 @@ let lastQuery = "Mumbai";
 
 POPULAR.forEach(([label, query]) => {
   const b = document.createElement("button");
-  b.type = "button"; b.textContent = label;
+  b.type = "button"; b.textContent = label; b.dataset.key = label.toLowerCase();
   b.onclick = () => { $("q").value = ""; load(query); };
   $("chips").appendChild(b);
 });
@@ -125,6 +130,7 @@ function render(d) {
   const place = [l.name, l.region, l.country].filter(Boolean).join(", ");
   show(`
     <div class="card">
+      ${CityArt.html(l)}
       <p class="loc">${esc(place)}</p>
       <p class="temp">${mood(c.condition.code, c.temp_c)} ${c.temp_c}°C</p>
       <div class="cond"><img src="https:${esc(c.condition.icon)}" alt=""><span>${esc(c.condition.text)}</span></div>
@@ -136,6 +142,8 @@ function render(d) {
       </div>
     </div>`);
   Sky.set(c.condition.code, c.is_day);
+  const k = CityArt.keyFor(l);
+  document.querySelectorAll("#chips button").forEach((b) => b.classList.toggle("active", !!k && b.dataset.key === k));
   $("json").textContent = JSON.stringify(d, null, 2);
   $("dev").hidden = false;
 }
