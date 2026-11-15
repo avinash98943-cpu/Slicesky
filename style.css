@@ -44,7 +44,7 @@ body {
 .app-header { text-align: center; margin-bottom: 16px; }
 .app-header h1 { margin: 0; font-size: 1.8rem; letter-spacing: 0.5px; text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55); }
 .logo { font-size: 1.4rem; text-shadow: none; }
-.tagline { margin: 4px 0 0; color: #e4eef5; font-size: 0.9rem; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55); }
+.tagline { margin: 4px 0 0; color: #ffffff; font-size: 0.9rem; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55); }
 
 /* Search (R1) */
 .search-form {

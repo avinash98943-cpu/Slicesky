@@ -154,25 +154,6 @@ window.SliceskySky = (function () {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
-    // Clouds drift (before the scrim so text zones stay dark over them)
-    for (const c of activeClouds()) {
-      c.x += c.v * dt;
-      if (c.x - c.s * 100 > W + 200) c.x = -150;
-      drawCloud(c, cur.cloudAlpha);
-    }
-
-    // Dark scrim at top and bottom so bare text (header, footer) stays readable over bright skies
-    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.45);
-    scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.6)");
-    scrimTop.addColorStop(1, "rgba(2, 8, 18, 0)");
-    ctx.fillStyle = scrimTop;
-    ctx.fillRect(0, 0, W, H * 0.45);
-    const scrimBottom = ctx.createLinearGradient(0, H * 0.72, 0, H);
-    scrimBottom.addColorStop(0, "rgba(2, 8, 18, 0)");
-    scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.5)");
-    ctx.fillStyle = scrimBottom;
-    ctx.fillRect(0, H * 0.72, W, H * 0.28);
-
     // Sun or moon
     if (mode === "clear" || mode === "partly") {
       const cx = W * 0.78, cy = H * 0.16, R = Math.min(W, H) * 0.055;
@@ -202,6 +183,13 @@ window.SliceskySky = (function () {
         ctx.fillStyle = `rgba(255, 255, 255, ${0.7 * tw})`;
         ctx.fillRect(s.x, s.y, s.r, s.r);
       }
+    }
+
+    // Clouds drift
+    for (const c of activeClouds()) {
+      c.x += c.v * dt;
+      if (c.x - c.s * 100 > W + 200) c.x = -150;
+      drawCloud(c, cur.cloudAlpha);
     }
 
     // Rain
@@ -245,6 +233,18 @@ window.SliceskySky = (function () {
         ctx.fillRect(b.x, b.y, b.h * 2, b.h);
       }
     }
+
+    // Dark scrim over the whole scene at top and bottom so text zones stay dark (drawn last, before lightning)
+    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.45);
+    scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.6)");
+    scrimTop.addColorStop(1, "rgba(2, 8, 18, 0)");
+    ctx.fillStyle = scrimTop;
+    ctx.fillRect(0, 0, W, H * 0.45);
+    const scrimBottom = ctx.createLinearGradient(0, H * 0.72, 0, H);
+    scrimBottom.addColorStop(0, "rgba(2, 8, 18, 0)");
+    scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.5)");
+    ctx.fillStyle = scrimBottom;
+    ctx.fillRect(0, H * 0.72, W, H * 0.28);
 
     // Lightning flashes
     if (mode === "thunder") {
