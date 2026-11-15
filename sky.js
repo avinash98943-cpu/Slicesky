@@ -153,6 +153,18 @@ window.SliceskySky = (function () {
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, W, H);
 
+    // Dark scrim at top and bottom so bare text (header, footer) stays readable over bright skies
+    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.26);
+    scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.38)");
+    scrimTop.addColorStop(1, "rgba(2, 8, 18, 0)");
+    ctx.fillStyle = scrimTop;
+    ctx.fillRect(0, 0, W, H * 0.26);
+    const scrimBottom = ctx.createLinearGradient(0, H * 0.78, 0, H);
+    scrimBottom.addColorStop(0, "rgba(2, 8, 18, 0)");
+    scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.3)");
+    ctx.fillStyle = scrimBottom;
+    ctx.fillRect(0, H * 0.78, W, H * 0.22);
+
     // Sun or moon
     if (mode === "clear" || mode === "partly") {
       const cx = W * 0.78, cy = H * 0.16, R = Math.min(W, H) * 0.055;
@@ -274,5 +286,5 @@ window.SliceskySky = (function () {
 
   start();
 
-  return { set };
+  return { set, frame: () => frame(performance.now()) };
 })();
