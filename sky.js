@@ -155,11 +155,11 @@ window.SliceskySky = (function () {
     ctx.fillRect(0, 0, W, H);
 
     // Dark scrim at top and bottom so bare text (header, footer) stays readable over bright skies
-    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.32);
+    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.45);
     scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.6)");
     scrimTop.addColorStop(1, "rgba(2, 8, 18, 0)");
     ctx.fillStyle = scrimTop;
-    ctx.fillRect(0, 0, W, H * 0.32);
+    ctx.fillRect(0, 0, W, H * 0.45);
     const scrimBottom = ctx.createLinearGradient(0, H * 0.72, 0, H);
     scrimBottom.addColorStop(0, "rgba(2, 8, 18, 0)");
     scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.5)");
