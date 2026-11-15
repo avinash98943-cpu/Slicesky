@@ -6,33 +6,34 @@ window.SliceskySky = (function () {
   let W = 0, H = 0, dpr = 1;
 
   // ---- Palettes: [top, middle, bottom] as rgb arrays + scene params ----
+  // Bottom stops are kept deep so white text over the content zone stays readable (WCAG AA+).
   const PALETTES = {
     clear: {
-      day:   { colors: [[66, 147, 224], [124, 189, 239], [205, 231, 250]], cloudCount: 0, cloudColor: [255, 255, 255], cloudAlpha: 0.55 },
+      day:   { colors: [[40, 110, 190], [70, 140, 205], [16, 42, 66]],    cloudCount: 0, cloudColor: [255, 255, 255], cloudAlpha: 0.55 },
       night: { colors: [[8, 12, 38], [18, 28, 66], [38, 52, 92]],          cloudCount: 0, cloudColor: [200, 214, 240], cloudAlpha: 0.25 },
     },
     partly: {
-      day:   { colors: [[52, 124, 196], [130, 176, 220], [196, 219, 235]], cloudCount: 4, cloudColor: [255, 255, 255], cloudAlpha: 0.7 },
+      day:   { colors: [[36, 104, 176], [96, 150, 200], [18, 40, 60]],    cloudCount: 4, cloudColor: [255, 255, 255], cloudAlpha: 0.7 },
       night: { colors: [[10, 16, 40], [24, 36, 70], [50, 64, 98]],          cloudCount: 3, cloudColor: [190, 205, 235], cloudAlpha: 0.35 },
     },
     overcast: {
-      day:   { colors: [[96, 112, 128], [138, 152, 163], [172, 182, 187]], cloudCount: 9, cloudColor: [225, 230, 235], cloudAlpha: 0.8 },
+      day:   { colors: [[60, 74, 92], [100, 114, 128], [22, 30, 40]],     cloudCount: 9, cloudColor: [225, 230, 235], cloudAlpha: 0.8 },
       night: { colors: [[16, 20, 28], [30, 38, 48], [48, 58, 68]],          cloudCount: 8, cloudColor: [160, 170, 185], cloudAlpha: 0.5 },
     },
     rain: {
-      day:   { colors: [[52, 68, 86], [80, 99, 118], [108, 128, 146]],     cloudCount: 8, cloudColor: [205, 213, 220], cloudAlpha: 0.85 },
+      day:   { colors: [[40, 54, 70], [68, 86, 104], [14, 22, 30]],       cloudCount: 8, cloudColor: [205, 213, 220], cloudAlpha: 0.85 },
       night: { colors: [[12, 16, 24], [26, 34, 44], [40, 52, 64]],          cloudCount: 8, cloudColor: [150, 160, 172], cloudAlpha: 0.55 },
     },
     thunder: {
-      day:   { colors: [[38, 44, 60], [58, 66, 84], [82, 90, 104]],        cloudCount: 9, cloudColor: [180, 186, 198], cloudAlpha: 0.9 },
+      day:   { colors: [[30, 36, 50], [48, 56, 72], [8, 12, 18]],         cloudCount: 9, cloudColor: [180, 186, 198], cloudAlpha: 0.9 },
       night: { colors: [[6, 8, 14], [16, 20, 30], [30, 36, 46]],            cloudCount: 9, cloudColor: [130, 138, 152], cloudAlpha: 0.6 },
     },
     snow: {
-      day:   { colors: [[122, 140, 158], [170, 186, 200], [208, 220, 228]], cloudCount: 6, cloudColor: [240, 244, 248], cloudAlpha: 0.8 },
+      day:   { colors: [[90, 108, 130], [130, 150, 170], [30, 42, 56]],   cloudCount: 6, cloudColor: [240, 244, 248], cloudAlpha: 0.8 },
       night: { colors: [[20, 28, 44], [40, 54, 74], [70, 88, 110]],          cloudCount: 5, cloudColor: [200, 210, 225], cloudAlpha: 0.5 },
     },
     fog: {
-      day:   { colors: [[140, 152, 158], [176, 186, 190], [206, 212, 214]], cloudCount: 2, cloudColor: [230, 234, 236], cloudAlpha: 0.5 },
+      day:   { colors: [[100, 112, 120], [140, 152, 160], [30, 38, 44]],  cloudCount: 2, cloudColor: [230, 234, 236], cloudAlpha: 0.5 },
       night: { colors: [[18, 22, 28], [36, 42, 48], [58, 64, 70]],           cloudCount: 2, cloudColor: [150, 156, 162], cloudAlpha: 0.4 },
     },
   };
@@ -154,16 +155,16 @@ window.SliceskySky = (function () {
     ctx.fillRect(0, 0, W, H);
 
     // Dark scrim at top and bottom so bare text (header, footer) stays readable over bright skies
-    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.26);
-    scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.38)");
+    const scrimTop = ctx.createLinearGradient(0, 0, 0, H * 0.28);
+    scrimTop.addColorStop(0, "rgba(2, 8, 18, 0.42)");
     scrimTop.addColorStop(1, "rgba(2, 8, 18, 0)");
     ctx.fillStyle = scrimTop;
-    ctx.fillRect(0, 0, W, H * 0.26);
-    const scrimBottom = ctx.createLinearGradient(0, H * 0.78, 0, H);
+    ctx.fillRect(0, 0, W, H * 0.28);
+    const scrimBottom = ctx.createLinearGradient(0, H * 0.74, 0, H);
     scrimBottom.addColorStop(0, "rgba(2, 8, 18, 0)");
-    scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.3)");
+    scrimBottom.addColorStop(1, "rgba(2, 8, 18, 0.4)");
     ctx.fillStyle = scrimBottom;
-    ctx.fillRect(0, H * 0.78, W, H * 0.22);
+    ctx.fillRect(0, H * 0.74, W, H * 0.26);
 
     // Sun or moon
     if (mode === "clear" || mode === "partly") {
