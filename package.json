@@ -1,0 +1,7 @@
+{
+  "name": "slicesky",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Slicesky — a mobile-friendly single-page weather checker powered by WeatherAPI.com",
+  "type": "module"
+}

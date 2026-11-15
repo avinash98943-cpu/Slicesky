@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Slicesky — check the weather in your city in one glance." />
+  <title>Slicesky — Weather at a glance</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1>Slicesky <span class="logo" aria-hidden="true">⛅</span></h1>
+      <p class="tagline">One search. One glance.</p>
+    </header>
+
+    <!-- R1: Search weather by city name -->
+    <form id="search-form" class="search-form" autocomplete="off">
+      <input
+        id="search-input"
+        type="text"
+        name="city"
+        placeholder="Search a city… e.g. Mumbai"
+        aria-label="City name"
+        required
+      />
+      <button type="submit" aria-label="Search weather">Search</button>
+    </form>
+
+    <!-- R4: Popular Cities one-tap shortcuts -->
+    <div class="popular" aria-label="Popular cities">
+      <span class="popular-label">Popular:</span>
+      <button class="chip" data-city="Mumbai">Mumbai</button>
+      <button class="chip" data-city="Delhi">Delhi</button>
+      <button class="chip" data-city="Bengaluru">Bengaluru</button>
+      <button class="chip" data-city="Chennai">Chennai</button>
+      <button class="chip" data-city="Kolkata">Kolkata</button>
+      <button class="chip" data-city="Hyderabad">Hyderabad</button>
+      <button class="chip" data-city="London">London</button>
+      <button class="chip" data-city="New York">New York</button>
+      <button class="chip" data-city="Tokyo">Tokyo</button>
+      <button class="chip" data-city="Dubai">Dubai</button>
+    </div>
+
+    <!-- R5: Loading state -->
+    <section id="loading" class="state" hidden>
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Fetching weather…</p>
+    </section>
+
+    <!-- R5: Error state -->
+    <section id="error" class="state" hidden>
+      <p class="error-emoji" aria-hidden="true">🌫️</p>
+      <p id="error-message">Something went wrong.</p>
+      <button id="retry-button" class="chip" hidden>Try again</button>
+    </section>
+
+    <!-- R2: Weather card -->
+    <section id="weather-card" class="card" hidden>
+      <div class="card-header">
+        <div>
+          <h2 id="location-name">—</h2>
+          <p id="location-region" class="region"></p>
+          <p id="local-time" class="local-time"></p>
+        </div>
+        <div class="condition">
+          <span id="condition-emoji" class="condition-emoji" aria-hidden="true">—</span>
+          <span id="condition-text"></span>
+        </div>
+      </div>
+
+      <div class="temp-row">
+        <span id="temp" class="temp">—</span>
+        <span class="temp-unit">°C</span>
+      </div>
+
+      <ul class="metrics">
+        <li>
+          <span class="metric-label">Feels like</span>
+          <span id="feels-like" class="metric-value">—</span>
+        </li>
+        <li>
+          <span class="metric-label">Humidity</span>
+          <span id="humidity" class="metric-value">—</span>
+        </li>
+        <li>
+          <span class="metric-label">Wind</span>
+          <span id="wind" class="metric-value">—</span>
+        </li>
+        <li>
+          <span class="metric-label">UV index</span>
+          <span id="uv" class="metric-value">—</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- JSON view, hidden behind a Developer toggle (per PRD risk resolution) -->
+    <section id="dev-section" class="dev" hidden>
+      <button id="dev-toggle" class="chip dev-toggle" aria-expanded="false">Developer view</button>
+      <div id="dev-panel" hidden>
+        <button id="copy-json" class="chip">Copy JSON</button>
+        <pre id="json-view" class="json-view" aria-label="Raw weather JSON"></pre>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Powered by <a href="https://www.weatherapi.com/" target="_blank" rel="noopener">WeatherAPI.com</a></p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
