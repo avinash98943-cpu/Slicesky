@@ -47,6 +47,29 @@ function conditionEmoji(condition) {
   return "🌤️";
 }
 
+// Map condition code/text to a sky animation mode (see sky.js)
+function skyMode(condition) {
+  const text = (condition.text || "").toLowerCase();
+  const code = condition.code;
+
+  if (code === 1087 || code >= 1273) return "thunder";
+  if (code === 1000) return "clear";
+  if (code === 1003) return "partly";
+  if ([1030, 1135, 1147].includes(code)) return "fog";
+  if ([1066, 1069, 1072, 1114, 1117, 1204, 1207, 1210, 1213, 1216, 1219, 1222, 1225, 1237, 1246, 1255, 1258, 1261, 1262, 1264].includes(code)) return "snow";
+  if ([1063, 1150, 1153, 1168, 1171, 1180, 1183, 1186, 1189, 1192, 1195, 1197, 1198, 1240, 1241, 1242].includes(code)) return "rain";
+  if ([1006, 1007, 1008, 1009].includes(code)) return "overcast";
+  // Text fallbacks for anything unmapped
+  if (text.includes("thunder") || text.includes("storm")) return "thunder";
+  if (text.includes("snow") || text.includes("blizzard") || text.includes("sleet") || text.includes("ice")) return "snow";
+  if (text.includes("rain") || text.includes("drizzle") || text.includes("shower")) return "rain";
+  if (text.includes("overcast")) return "overcast";
+  if (text.includes("fog") || text.includes("mist") || text.includes("haze")) return "fog";
+  if (text.includes("sunny") || text.includes("clear")) return "clear";
+  if (text.includes("cloud")) return "overcast";
+  return "partly";
+}
+
 function show(section) {
   [els.loading, els.error, els.card].forEach((s) => (s.hidden = true));
   if (section) section.hidden = false;
@@ -83,6 +106,11 @@ function render(data) {
   currentData = data;
   els.devSection.hidden = false;
   els.jsonView.textContent = JSON.stringify(data, null, 2);
+
+  // Animate the background sky to match the condition (day/night aware)
+  if (window.SliceskySky) {
+    window.SliceskySky.set(skyMode(current.condition), current.is_day === 1);
+  }
 
   show(els.card);
 }
